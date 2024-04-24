@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #messageContainer {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            background-color: #f2f2f2;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #messageInput {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        #messageSubmitBtn {
+            width: 80px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #messageSubmitBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="messageContainer">
+        <!-- Messages will be displayed here -->
+    </div>
+    <form id="messageForm">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button type="submit" id="messageSubmitBtn">Send</button>
+    </form>
+
+    <script>
+        // JavaScript code goes here
+               // Load existing messages from local storage
+               var messages = JSON.parse(localStorage.getItem('messages')) || [];
+
+var messageContainer = document.getElementById('messageContainer');
+var messageForm = document.getElementById('messageForm');
+var messageInput = document.getElementById('messageInput');
+
+// Function to display messages
+function displayMessages() {
+    messageContainer.innerHTML = '';
+    messages.forEach(function(message) {
+        var div = document.createElement('div');
+        div.classList.add('message');
+        div.textContent = message;
+        messageContainer.appendChild(div);
+    });
+}
+
+// Display existing messages
+displayMessages();
+
+// Handle message submission
+messageForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    var message = messageInput.value.trim();
+    if (message !== '') {
+        messages.push(message);
+        localStorage.setItem('messages', JSON.stringify(messages));
+        displayMessages();
+        messageInput.value = '';
+    }
+});
+    </script>
+</body>
+</html>
